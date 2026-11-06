@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ห้องเสื้อปอลลออาร์ - เว็บไซต์ร้านค้า</title>
+    <meta name="description" content="แหล่งรวมสินค้าไลฟ์สไตล์สุดคิวท์ คัดสรรคุณภาพดีไซน์น่ารักในโทนพาสเทล พร้อมบริการจัดส่งรวดเร็วทันใจ ดูแลลูกค้าทุกท่านด้วยความใส่ใจค่ะ 🌸✨">
+
+    <!-- Open Graph / Social Media Link Preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ห้องเสื้อปอลลออาร์ - เว็บไซต์ร้านค้า">
+    <meta property="og:description" content="แหล่งรวมสินค้าไลฟ์สไตล์สุดคิวท์ คัดสรรคุณภาพดีไซน์น่ารักในโทนพาสเทล แจ้งเลขแทรคและอัปเดตงานใหม่ทางโอเพ้นแชทเท่านั้นนะคะ 💖">
+    <meta property="og:image" content="https://i.postimg.cc/VL0J2kJg/att-610eb-Tv-YX-8NI1Oxr8Jeksj8o-Zu-Rq65KD-FNv-KIRl20.jpg">
+
+    <!-- Twitter Card Preview -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ห้องเสื้อปอลลออาร์ - เว็บไซต์ร้านค้า">
+    <meta name="twitter:description" content="แหล่งรวมสินค้าไลฟ์สไตล์สุดคิวท์ คัดสรรคุณภาพดีไซน์น่ารักในโทนพาสเทล แจ้งเลขแทรคและอัปเดตงานใหม่ทางโอเพ้นแชทเท่านั้นนะคะ 💖">
+    <meta name="twitter:image" content="https://i.postimg.cc/VL0J2kJg/att-610eb-Tv-YX-8NI1Oxr8Jeksj8o-Zu-Rq65KD-FNv-KIRl20.jpg">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Kanit & Sarabun -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Kanit', 'sans-serif'],
+                        body: ['Sarabun', 'sans-serif'],
+                    },
+                    colors: {
+                        nicha: {
+                            pink: '#FF85A2',
+                            pinkLight: '#FFECF1',
+                            pinkDark: '#E06D8A',
+                            blue: '#7ECEF4',
+                            blueLight: '#E8F6FF',
+                            blueDark: '#4AADE0',
+                            yellow: '#FFD966',
+                            yellowLight: '#FFF8DB',
+                            yellowDark: '#E6BD33',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FFF5F7;
+            background-image: 
+                radial-gradient(at 15% 10%, rgba(255, 217, 102, 0.35) 0px, transparent 55%),
+                radial-gradient(at 85% 90%, rgba(126, 206, 244, 0.35) 0px, transparent 55%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #5A3E42;
+        }
+        .marquee-wrapper {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+        .marquee-text {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 20s linear infinite;
+        }
+        .marquee-wrapper:hover .marquee-text {
+            animation-play-state: paused;
+        }
+        @keyframes marquee {
+            0%   { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+        .clean-card {
+            background: #FFFFFF;
+            border: 1.5px solid #FFE0E9;
+            box-shadow: 0 8px 24px -4px rgba(255, 133, 162, 0.15);
+        }
+        .nav-pill {
+            background: #FFFFFF;
+            border: 1.5px solid #FFD1DC;
+            color: #5A3E42;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+        }
+        .nav-pill:hover {
+            border-color: #FF85A2;
+            background-color: #FFF9FA;
+        }
+        #tab-payment.nav-pill.active {
+            background: #FF85A2 !important;
+            border-color: #FF85A2 !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 4px 12px -2px rgba(255, 133, 162, 0.5);
+        }
+        #tab-tracking.nav-pill.active {
+            background: #7ECEF4 !important;
+            border-color: #7ECEF4 !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 4px 12px -2px rgba(126, 206, 244, 0.55);
+        }
+        #tab-contact.nav-pill.active {
+            background: #FFD966 !important;
+            border-color: #FFD966 !important;
+            color: #5A3E42 !important;
+            box-shadow: 0 4px 12px -2px rgba(255, 217, 102, 0.6);
+        }
+        #tab-payment.nav-pill.active i,
+        #tab-tracking.nav-pill.active i {
+            color: #FFFFFF !important;
+        }
+        #tab-contact.nav-pill.active i {
+            color: #5A3E42 !important;
+        }
+        @keyframes slideUpSheet {
+            from { transform: translateY(100%); opacity: 0.5; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .animate-sheet-up {
+            animation: slideUpSheet 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF5F7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FF85A2;
+            border-radius: 4px;
+        }
+        #appSplashScreen {
+            background-color: #FFF5F7;
+            background-image:
+                radial-gradient(at 20% 20%, rgba(255, 217, 102, 0.45) 0px, transparent 55%),
+                radial-gradient(at 80% 80%, rgba(126, 206, 244, 0.45) 0px, transparent 55%);
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #appSplashScreen.splash-fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        @keyframes splashLogoPop {
+            0% { transform: scale(0.45); opacity: 0; }
+            65% { transform: scale(1.08); opacity: 1; }
+            85% { transform: scale(0.96); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .splash-logo-pop {
+            animation: splashLogoPop 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        @keyframes glitterFloat {
+            0%, 100% { transform: translateY(0) scale(0.6) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-10px) scale(1.25) rotate(20deg); opacity: 1; }
+        }
+        .glitter-dot {
+            position: absolute;
+            pointer-events: none;
+            animation: glitterFloat 1.6s ease-in-out infinite;
+        }
+        @keyframes handwritingReveal {
+            0% { clip-path: inset(0 100% 0 0); opacity: 0.3; }
+            100% { clip-path: inset(0 0 0 0); opacity: 1; }
+        }
+        .handwriting-reveal {
+            display: inline-block;
+            clip-path: inset(0 100% 0 0);
+            animation: handwritingReveal 1.15s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+        }
+        #mascotWidget {
+            position: fixed;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 45;
+            pointer-events: none;
+        }
+        .mascot-speech-bubble {
+            background: rgba(255, 255, 255, 0.96);
+            border: 1.5px solid #FFD1DC;
+            box-shadow: 0 8px 22px -4px rgba(255, 133, 162, 0.25);
+            transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .mascot-speech-bubble.bubble-hidden {
+            opacity: 0;
+            transform: translateY(4px) scale(0.96);
+            pointer-events: none;
+        }
+        .mascot-text-fade {
+            transition: opacity 0.32s ease-in-out;
+            opacity: 1;
+        }
+        .mascot-text-fade.text-fading-out {
+            opacity: 0;
+        }
+        @keyframes mascotGentleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-7px); }
+        }
+        .mascot-float-btn {
+            animation: mascotGentleFloat 2.8s ease-in-out infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .mascot-speech-bubble,
+            .mascot-text-fade {
+                transition: none !important;
+            }
+            .mascot-float-btn {
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="pb-10 selection:bg-nicha-pink selection:text-white">
+
+    <!-- SPLASH SCREEN -->
+    <div id="appSplashScreen" role="status" aria-live="polite" class="fixed inset-0 z-[100] flex flex-col items-center justify-center px-6 select-none">
+        <div class="relative flex flex-col items-center justify-center">
+            <span class="glitter-dot -top-7 -left-8 text-[#FF85A2] text-lg" style="animation-delay: 0s;">✦</span>
+            <span class="glitter-dot -top-9 right-4 text-[#FFD966] text-sm" style="animation-delay: 0.25s;">★</span>
+            <span class="glitter-dot top-3 -right-10 text-[#7ECEF4] text-base" style="animation-delay: 0.45s;">✦</span>
+            <span class="glitter-dot bottom-10 -left-10 text-[#FFD966] text-base" style="animation-delay: 0.15s;">✦</span>
+            <span class="glitter-dot bottom-6 -right-8 text-[#FF85A2] text-sm" style="animation-delay: 0.6s;">★</span>
+            <span class="glitter-dot -top-3 left-1/2 -translate-x-12 text-[#7ECEF4] text-xs" style="animation-delay: 0.35s;">●</span>
+
+            <img id="splashLogoImg"
+                 src="https://i.postimg.cc/QtNBzg7b/att-ul-O-x-Ag-ZGs-Xzh-I51x-Kr7me-KSg-X9sw-Zu7icp54A6Ric.jpg"
+                 onerror="this.src='https://placehold.co/200x200/FFF0F5/FF85A2?text=Logo'"
+                 alt="ห้องเสื้อปอลลออาร์"
+                 class="splash-logo-pop w-24 h-24 sm:w-28 sm:h-28 rounded-[26px] object-cover shadow-md">
+
+            <div class="mt-5 text-center">
+                <p class="handwriting-reveal text-base sm:text-xl font-bold text-[#5A3E42] tracking-wide">
+                    ยินดีต้อนรับเข้าสู่ร้านปอลออาร์
+                </p>
+            </div>
+
+            <p id="splashStatusText" class="mt-2 text-xs text-slate-400 font-body">
+                กำลังเชื่อมต่อฐานข้อมูล Supabase...
+            </p>
+
+            <div id="splashErrorBox" class="hidden mt-4 text-center space-y-2">
+                <p id="splashErrorMsg" class="text-xs text-rose-500 font-body">ไม่สามารถเชื่อมต่อฐานข้อมูลได้</p>
+                <button type="button" onclick="retrySplashInit()" class="bg-nicha-pink hover:bg-nicha-pinkDark text-white text-xs font-semibold px-4 py-1.5 rounded-full shadow-sm transition-all">
+                    ลองใหม่อีกครั้ง
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN HTML STRUCTURE -->
+    <main class="max-w-lg mx-auto px-3.5 sm:px-4 pt-4 pb-12 space-y-3.5">
+
+        <!-- แอดมินล็อกอินแบดจ์ -->
+        <div id="adminStatusBanner" class="admin-only hidden bg-nicha-blueDark text-white px-3.5 py-2 rounded-2xl text-xs font-medium flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-1.5">
+                <i class="ph-fill ph-gear-six text-base"></i>
+                <span id="adminBannerText">โหมดแอดมิน Supabase (เชื่อมต่อสำเร็จ)</span>
+            </div>
+            <button onclick="handleAdminLogout()" class="bg-white/20 hover:bg-white/30 px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all">
+                ออกจากระบบ
+            </button>
+        </div>
+
+        <!-- แบนเนอร์ & โลโก้ร้าน -->
+        <header class="space-y-3">
+            <div class="rounded-[28px] overflow-hidden shadow-sm">
+                <img id="shopBanner"
+                     src="https://i.postimg.cc/VL0J2kJg/att-610eb-Tv-YX-8NI1Oxr8Jeksj8o-Zu-Rq65KD-FNv-KIRl20.jpg"
+                     onerror="this.src='https://placehold.co/800x260/FFF0F5/FF85A2?text=Banner'"
+                     alt="ห้องเสื้อปอลลออาร์ Banner"
+                     class="w-full h-32 sm:h-40 object-cover block">
+            </div>
+
+            <div class="clean-card rounded-[28px] p-4 sm:p-5 relative overflow-hidden">
+                <button onclick="openAdminModal('shopInfo')" class="admin-only hidden absolute top-3 right-3 z-20 bg-white/95 hover:bg-nicha-yellow text-slate-700 px-2.5 py-1 rounded-xl text-xs font-medium shadow-sm border border-slate-200 flex items-center gap-1">
+                    <i class="ph ph-pencil-simple"></i> แก้ไขส่วนหัวร้าน
+                </button>
+
+                <div class="flex items-center gap-3.5 sm:gap-4 relative z-10">
+                    <div onclick="handleLogoClickToAdmin()" title="แตะที่โลโก้เพื่อเข้าสู่ระบบแอดมิน" class="relative shrink-0 cursor-pointer group">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-[20px] overflow-hidden shadow-sm group-active:scale-95 transition-transform bg-white">
+                            <img id="shopLogo"
+                                 src="https://i.postimg.cc/QtNBzg7b/att-ul-O-x-Ag-ZGs-Xzh-I51x-Kr7me-KSg-X9sw-Zu7icp54A6Ric.jpg"
+                                 onerror="this.src='https://placehold.co/200x200/FFF0F5/FF85A2?text=Logo'"
+                                 alt="ห้องเสื้อปอลลออาร์ Logo"
+                                 class="w-full h-full object-cover rounded-[20px] block">
+                        </div>
+                        <span id="shopStatusDot" class="w-3.5 h-3.5 rounded-full bg-[#22C55E] border-2 border-white absolute -bottom-0.5 -right-0.5 shadow-sm"></span>
+                    </div>
+
+                    <div class="flex-1 min-w-0 text-left space-y-1">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <h1 id="shopNameDisplay" class="text-lg sm:text-2xl font-bold text-[#5A3E42] tracking-tight truncate">
+                                ห้องเสื้อปอลลออาร์
+                            </h1>
+                            <span id="shopStatusBadge" class="bg-[#F8DFE2] text-[#7A5258] text-[11px] font-semibold px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> เปิดร้าน
+                            </span>
+                            <button id="bgmToggleBtn" type="button" onclick="toggleBgmPlayback()" title="เปิด/ปิดเพลงพื้นหลัง" class="w-7 h-7 rounded-full bg-nicha-pinkLight hover:bg-nicha-pink text-nicha-pinkDark hover:text-white border border-pink-200 flex items-center justify-center text-sm shadow-sm transition-all active:scale-90">
+                                <i id="bgmIcon" class="ph-fill ph-music-notes"></i>
+                            </button>
+                        </div>
+                        <p id="shopDescDisplay" class="text-[#9E8286] font-body text-xs sm:text-sm leading-relaxed line-clamp-2">
+                            แหล่งรวมสินค้าไลฟ์สไตล์สุดคิวท์ คัดสรรคุณภาพดีไซน์น่ารักในโทนพาสเทล พร้อมบริการจัดส่งรวดเร็วทันใจ ดูแลลูกค้าทุกท่านด้วยความใส่ใจค่ะ 🌸✨
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <audio id="bgmAudioPlayer" src="bgm.mp3" loop preload="auto"></audio>
+
+        <!-- ข้อความวิ่ง (Marquee) -->
+        <section aria-label="ประกาศจากทางร้าน" class="relative">
+            <div class="clean-card rounded-full py-2 px-3.5 flex items-center gap-2">
+                <span class="bg-nicha-pink text-white text-[11px] font-semibold px-2.5 py-0.5 rounded-full shrink-0 flex items-center gap-1 shadow-sm">
+                    <i class="ph-fill ph-megaphone"></i> ประกาศ
+                </span>
+                <div class="marquee-wrapper flex-1 text-xs sm:text-sm font-medium text-[#5A3E42] font-body">
+                    <div id="marqueeDisplay" class="marquee-text">
+                        🎉 ยินดีต้อนรับสู่ ห้องเสื้อปอลลออาร์! แจ้งเลขแทรคและอัปเดตงานใหม่ทางโอเพ้นแชทเท่านั้นนะคะ ขอบคุณที่อุดหนุนค่ะ 💖
+                    </div>
+                </div>
+                <button onclick="openAdminModal('marquee')" class="admin-only hidden shrink-0 bg-nicha-yellow hover:bg-amber-300 text-slate-800 px-2.5 py-0.5 rounded-full text-[11px] font-medium flex items-center gap-1">
+                    <i class="ph ph-pencil-simple"></i> แก้ไข
+                </button>
+            </div>
+        </section>
+
+        <!-- ปุ่มเมนูแท็บ -->
+        <nav aria-label="เมนูหลัก" class="flex flex-wrap items-center justify-center gap-2 pt-0.5">
+            <button onclick="selectTab('payment')" id="tab-payment" class="nav-pill rounded-full py-1.5 px-4 font-medium text-xs flex items-center justify-center gap-1.5">
+                <i class="ph-fill ph-qr-code text-sm text-nicha-pink"></i>
+                <span>ช่องทางการโอน</span>
+            </button>
+            <button onclick="selectTab('tracking')" id="tab-tracking" class="nav-pill rounded-full py-1.5 px-4 font-medium text-xs flex items-center justify-center gap-1.5">
+                <i class="ph-fill ph-truck text-sm text-nicha-blueDark"></i>
+                <span>ช่องทางการแจ้งเลข</span>
+            </button>
+            <button onclick="selectTab('contact')" id="tab-contact" class="nav-pill rounded-full py-1.5 px-4 font-medium text-xs flex items-center justify-center gap-1.5">
+                <i class="ph-fill ph-chats-circle text-sm text-nicha-yellowDark"></i>
+                <span>ช่องทางการติดต่อ</span>
+            </button>
+        </nav>
+
+        <!-- หน้าหลัก: 3 กรอบรายละเอียด -->
+        <div id="content-home" class="tab-content space-y-3.5">
+            <section class="clean-card rounded-[28px] p-5 sm:p-6 flex flex-col justify-center relative overflow-hidden">
+                <button onclick="openAdminModal('detailBox1')" class="admin-only hidden absolute top-4 right-4 z-10 bg-white hover:bg-nicha-yellow text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium shadow-sm border border-slate-200 flex items-center gap-1">
+                    <i class="ph ph-pencil-simple"></i> แก้ไขส่วนที่ 1
+                </button>
+                <div class="space-y-2 text-left relative z-10">
+                    <h2 id="detailBox1TitleDisplay" class="text-base sm:text-lg font-bold text-[#5A3E42] flex items-center gap-1.5">
+                        <i class="ph-fill ph-sparkle text-nicha-pink"></i> รายละเอียดการซื้อสินค้า
+                    </h2>
+                    <p id="detailBox1TextDisplay" class="text-xs sm:text-sm text-[#7A5C60] font-body leading-relaxed whitespace-pre-line">กำลังโหลดข้อมูล...</p>
+                </div>
+            </section>
+
+            <section class="clean-card rounded-[28px] p-5 sm:p-6 flex flex-col justify-center relative overflow-hidden">
+                <button onclick="openAdminModal('detailBox2')" class="admin-only hidden absolute top-4 right-4 z-10 bg-white hover:bg-nicha-yellow text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium shadow-sm border border-slate-200 flex items-center gap-1">
+                    <i class="ph ph-pencil-simple"></i> แก้ไขส่วนที่ 2
+                </button>
+                <div class="space-y-2 text-left relative z-10">
+                    <h2 id="detailBox2TitleDisplay" class="text-base sm:text-lg font-bold text-[#5A3E42] flex items-center gap-1.5">
+                        <i class="ph-fill ph-info text-nicha-blueDark"></i> รายละเอียดเพิ่มเติม
+                    </h2>
+                    <p id="detailBox2TextDisplay" class="text-xs sm:text-sm text-[#7A5C60] font-body leading-relaxed whitespace-pre-line">กำลังโหลดข้อมูล...</p>
+                </div>
+            </section>
+
+            <section class="clean-card rounded-[28px] p-5 sm:p-6 flex flex-col justify-center relative overflow-hidden">
+                <button onclick="openAdminModal('detailBox3')" class="admin-only hidden absolute top-4 right-4 z-10 bg-white hover:bg-nicha-yellow text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium shadow-sm border border-slate-200 flex items-center gap-1">
+                    <i class="ph ph-pencil-simple"></i> แก้ไขส่วนที่ 3
+                </button>
+                <div class="space-y-2 text-left relative z-10">
+                    <h2 id="detailBox3TitleDisplay" class="text-base sm:text-lg font-bold text-[#5A3E42] flex items-center gap-1.5">
+                        <i class="ph-fill ph-notebook text-nicha-yellowDark"></i> รายละเอียดการเอฟ
+                    </h2>
+                    <p id="detailBox3TextDisplay" class="text-xs sm:text-sm text-[#7A5C60] font-body leading-relaxed whitespace-pre-line">กำลังโหลดข้อมูล...</p>
+                    <div class="pt-2 flex items-center justify-end">
+                        <button onclick="openReviewSheet()" class="text-xs font-semibold bg-nicha-pink text-white px-4 py-1.5 rounded-full shadow-sm hover:opacity-90 transition-all flex items-center gap-1">
+                            <i class="ph-fill ph-star text-nicha-yellow"></i> ดูรีวิวลูกค้า (<span id="reviewCountBadge">0</span>)
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- แท็บย่อย -->
+        <section id="tabContentContainer" class="hidden clean-card rounded-[28px] p-4 sm:p-6 relative transition-all">
+
+            <!-- โอนเงิน -->
+            <div id="content-payment" class="tab-content hidden space-y-4">
+                <div class="flex items-center justify-between border-b border-pink-100 pb-3">
+                    <h2 class="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="ph-fill ph-wallet text-nicha-pink"></i> ช่องทางการโอนเงิน
+                    </h2>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="openAdminModal('payment')" class="admin-only hidden bg-white hover:bg-nicha-yellow text-slate-700 px-2.5 py-1 rounded-xl text-xs font-medium shadow-sm border border-slate-200 flex items-center gap-1">
+                            <i class="ph ph-pencil-simple"></i> แก้ไขช่องทางโอน
+                        </button>
+                        <button onclick="selectTab('home')" class="text-xs font-medium text-slate-500 hover:text-nicha-pinkDark bg-pink-50 hover:bg-pink-100 px-2.5 py-1 rounded-full flex items-center gap-1 transition-all">
+                            <i class="ph-bold ph-arrow-left"></i> หน้าหลัก
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-3.5">
+                    <div class="rounded-2xl overflow-hidden border border-pink-100 bg-white shadow-sm">
+                        <img id="paymentImgDisplay"
+                             src="https://i.postimg.cc/GmPDXV1C/att-qm-Kf9D-nnul-Xf-HZNMdm-r-W9j-Ux-Ycab-Mh9dh-PGubl2Pk.jpg"
+                             onerror="this.src='https://placehold.co/600x600/FFF0F5/FF85A2?text=Payment+Image'"
+                             alt="ช่องทางการโอนเงิน ห้องเสื้อปอลลออาร์"
+                             class="w-full h-auto object-contain mx-auto max-h-[460px]">
+                    </div>
+
+                    <div class="bg-gradient-to-br from-nicha-yellowLight via-white to-nicha-pinkLight p-4 sm:p-5 rounded-2xl border border-pink-100 space-y-3">
+                        <div class="flex items-center justify-between gap-2 flex-wrap">
+                            <div>
+                                <p id="bankNameDisplay" class="text-xs font-semibold text-slate-500">รายละเอียดการโอนเงิน</p>
+                                <p id="accNameDisplay" class="text-sm sm:text-base font-bold text-slate-800">ห้องเสื้อปอลลออาร์</p>
+                            </div>
+                            <button onclick="copyBankNumber()" class="text-xs bg-white hover:bg-nicha-pink hover:text-white text-nicha-pinkDark font-semibold px-3 py-1.5 rounded-xl border border-pink-100 shadow-sm transition-all flex items-center gap-1">
+                                <i class="ph ph-copy"></i> คัดลอกเลขบัญชี (<span id="accNumberDisplay" class="font-mono">123-4-56789-0</span>)
+                            </button>
+                        </div>
+
+                        <p id="paymentNoteDisplay" class="text-xs sm:text-sm text-slate-600 font-body leading-relaxed whitespace-pre-line border-t border-pink-100 pt-2.5">กำลังโหลด...</p>
+
+                        <div class="pt-1">
+                            <a id="paymentChatBtn" href="https://lin.ee/78ET40F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-1.5 w-full bg-nicha-pink hover:bg-nicha-pinkDark text-white text-xs sm:text-sm font-semibold py-2.5 px-4 rounded-xl shadow-sm transition-all">
+                                <i class="ph-fill ph-chat-circle-dots text-base"></i> โอนแล้วคลิกทักแชทแจ้งสลิป (บ้านเขียว)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- แจ้งเลขพัสดุ -->
+            <div id="content-tracking" class="tab-content hidden space-y-4">
+                <div class="flex items-center justify-between border-b border-blue-100 pb-3">
+                    <h2 class="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="ph-fill ph-truck text-nicha-blueDark"></i> ช่องทางการแจ้งเลขพัสดุ
+                    </h2>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="openAdminModal('tracking')" class="admin-only hidden bg-white hover:bg-nicha-yellow text-slate-700 px-2.5 py-1 rounded-xl text-xs font-medium shadow-sm border border-slate-200 flex items-center gap-1">
+                            <i class="ph ph-pencil-simple"></i> แก้ไขลิงก์
+                        </button>
+                        <button onclick="selectTab('home')" class="text-xs font-medium text-slate-500 hover:text-nicha-pinkDark bg-blue-50 hover:bg-blue-100 px-2.5 py-1 rounded-full flex items-center gap-1 transition-all">
+                            <i class="ph-bold ph-arrow-left"></i> หน้าหลัก
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-nicha-blueLight via-white to-nicha-yellowLight/60 p-6 rounded-2xl border border-blue-100 text-center space-y-4 max-w-lg mx-auto">
+                    <div class="w-14 h-14 mx-auto rounded-2xl bg-[#06C755] text-white flex items-center justify-center text-3xl shadow-md">
+                        <i class="ph-fill ph-users-three"></i>
+                    </div>
+                    <div class="space-y-1.5">
+                        <span class="inline-block text-[11px] font-bold bg-green-100 text-green-700 px-2.5 py-0.5 rounded-full">
+                            LINE OPENCHAT
+                        </span>
+                        <h3 id="openChatTitleDisplay" class="text-base sm:text-lg font-bold text-slate-800">
+                            กลุ่มแจ้งเลขพัสดุ & อัปเดตงานใหม่ ห้องเสื้อปอลลออาร์
+                        </h3>
+                        <p id="trackingNoteDisplay" class="text-xs sm:text-sm text-slate-600 font-body leading-relaxed">
+                            กำลังโหลด...
+                        </p>
+                    </div>
+                    <div class="pt-1">
+                        <a id="openChatLinkBtn" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white font-bold px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-md hover:shadow-lg transition-all w-full sm:w-auto">
+                            <i class="ph-fill ph-chat-teardrop-dots text-lg"></i>
+                            <span>คลิกเข้าร่วมกลุ่ม Line OpenChat แจ้งเลขพัสดุ</span>
+                            <i class="ph-bold ph-arrow-square-out"></i>
+                        </a>
+                    </div>
+                    <p class="text-[11px] text-slate-400 font-body break-all">
+                        ลิงก์ปัจจุบัน: <span id="openChatUrlText" class="underline">...</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- ติดต่อ -->
+            <div id="content-contact" class="tab-content hidden space-y-4">
+                <div class="flex items-center justify-between border-b border-yellow-100 pb-3">
+                    <h2 class="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="ph-fill ph-chats-circle text-nicha-yellowDark"></i> ช่องทางการติดต่อ
+                    </h2>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="openAdminModal('contact')" class="admin-only hidden bg-white hover:bg-nicha-yellow text-slate-700 px-2.5 py-1 rounded-xl text-xs font-medium shadow-sm border border-slate-200 flex items-center gap-1">
+                            <i class="ph ph-pencil-simple"></i> แก้ไขข้อมูลติดต่อ
+                        </button>
+                        <button onclick="selectTab('home')" class="text-xs font-medium text-slate-500 hover:text-nicha-pinkDark bg-yellow-50 hover:bg-yellow-100 px-2.5 py-1 rounded-full flex items-center gap-1 transition-all">
+                            <i class="ph-bold ph-arrow-left"></i> หน้าหลัก
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col space-y-3">
+                    <div class="bg-nicha-pinkLight/60 p-4 rounded-2xl border border-pink-100 flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-11 h-11 shrink-0 rounded-full bg-[#06C755] text-white flex items-center justify-center text-xl shadow-sm">
+                                <i class="ph-fill ph-chat-circle-dots"></i>
+                            </div>
+                            <div class="text-left min-w-0">
+                                <h3 class="font-bold text-sm text-slate-800">Line Official (บ้านเขียว)</h3>
+                                <p id="contactLineDisplay" class="text-xs text-nicha-pinkDark font-semibold truncate">...</p>
+                            </div>
+                        </div>
+                        <a id="contactChatCardBtn" href="#" target="_blank" rel="noopener noreferrer" class="shrink-0 inline-flex items-center justify-center gap-1 bg-nicha-pink hover:bg-nicha-pinkDark text-white text-xs font-semibold py-2 px-3.5 rounded-xl shadow-sm transition-all">
+                            <i class="ph-fill ph-paper-plane-tilt"></i> ทักแชท
+                        </a>
+                    </div>
+
+                    <div class="bg-nicha-blueLight/80 p-4 rounded-2xl border border-blue-100 flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-11 h-11 shrink-0 rounded-full bg-nicha-blueDark text-white flex items-center justify-center text-xl shadow-sm">
+                                <i class="ph-fill ph-facebook-logo"></i>
+                            </div>
+                            <div class="text-left min-w-0">
+                                <h3 class="font-bold text-sm text-slate-800">Facebook</h3>
+                                <p id="contactFbDisplay" class="text-xs text-nicha-blueDark font-semibold truncate">...</p>
+                            </div>
+                        </div>
+                        <a id="contactFbCardBtn" href="#" target="_blank" rel="noopener noreferrer" class="shrink-0 inline-flex items-center justify-center gap-1 bg-nicha-blueDark hover:bg-blue-600 text-white text-xs font-semibold py-2 px-3.5 rounded-xl shadow-sm transition-all">
+                            <i class="ph-fill ph-arrow-square-out"></i> เปิดลิงก์เพจ
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FLOATING BOTTOM SHEET: รีวิว -->
+    <div id="reviewFloatingModal" class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="bg-white rounded-t-[32px] sm:rounded-3xl max-w-lg w-full max-h-[85vh] flex flex-col shadow-2xl animate-sheet-up overflow-hidden">
+            <div class="pt-3 pb-2 px-5 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-nicha-pinkLight via-nicha-yellowLight to-nicha-blueLight">
+                <div class="flex items-center gap-2">
+                    <div class="w-9 h-9 rounded-2xl bg-nicha-yellow text-amber-700 flex items-center justify-center text-xl shadow-sm">
+                        <i class="ph-fill ph-star"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base sm:text-lg font-bold text-slate-800">รีวิวความประทับใจจากลูกค้า</h3>
+                        <p id="reviewSheetSubBadge" class="text-xs text-slate-500">กำลังโหลดรีวิว...</p>
+                    </div>
+                </div>
+                <button onclick="closeReviewSheet()" class="w-8 h-8 rounded-full bg-white/80 hover:bg-white text-slate-600 flex items-center justify-center shadow-sm">
+                    <i class="ph-bold ph-x"></i>
+                </button>
+            </div>
+
+            <div class="p-4 sm:p-5 overflow-y-auto space-y-3 bg-gradient-to-b from-nicha-pinkLight/20 via-nicha-yellowLight/15 to-nicha-blueLight/20">
+                <div id="reviewList" class="grid grid-cols-1 gap-2.5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ล็อกอินแอดมิน (Supabase Auth) เมื่อกดที่โลโก้ -->
+    <div id="adminLoginModal" class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4 border-2 border-pink-200">
+            <div class="flex items-center justify-between border-b pb-3">
+                <h3 class="text-base font-bold text-slate-800 flex items-center gap-1.5">
+                    <i class="ph-fill ph-shield-check text-nicha-pink"></i> เข้าสู่ระบบแอดมิน
+                </h3>
+                <button onclick="closeAdminLoginModal()" class="text-slate-400 hover:text-slate-600 text-xl">
+                    <i class="ph-bold ph-x"></i>
+                </button>
+            </div>
+            <form onsubmit="handleAdminLogin(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">อีเมลแอดมิน</label>
+                    <input type="email" id="adminEmailInput" required placeholder="admin@domain.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-nicha-pink">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">รหัสผ่าน</label>
+                    <input type="password" id="adminPasswordInput" required placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-nicha-pink">
+                </div>
+                <p class="text-[11px] text-slate-400 font-body">ระบบจะตรวจสอบสิทธิ์ UID แอดมินของคุณอัตโนมัติ</p>
+                <div class="flex justify-end gap-2 pt-1">
+                    <button type="button" onclick="closeAdminLoginModal()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-600">ยกเลิก</button>
+                    <button type="submit" id="adminLoginBtn" class="bg-nicha-pink hover:bg-nicha-pinkDark text-white px-5 py-2 rounded-xl text-xs font-semibold shadow-sm">เข้าสู่ระบบ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: แก้ไขข้อมูลร้าน (แอดมิน) -->
+    <div id="adminGeneralModal" class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b pb-3">
+                <h3 id="generalModalTitle" class="text-lg font-bold text-slate-800">แก้ไขข้อมูล</h3>
+                <button onclick="closeAdminGeneralModal()" class="text-slate-400 hover:text-slate-600 text-xl">
+                    <i class="ph-bold ph-x"></i>
+                </button>
+            </div>
+            <form id="generalAdminForm" onsubmit="saveGeneralAdminToSupabase(event)" class="space-y-3">
+                <div id="generalModalFields" class="space-y-3"></div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeAdminGeneralModal()" class="px-4 py-2 rounded-xl border border-slate-200 text-sm font-medium text-slate-600">ยกเลิก</button>
+                    <button type="submit" id="saveAdminBtn" class="bg-nicha-pink hover:bg-nicha-pinkDark text-white px-5 py-2 rounded-xl text-sm font-semibold shadow-sm">บันทึกไปยัง Supabase</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toastBox" class="fixed bottom-5 right-5 z-50 hidden bg-slate-800 text-white px-4 py-3 rounded-2xl shadow-lg text-sm font-medium flex items-center gap-2">
+        <i class="ph-fill ph-check-circle text-nicha-yellow text-lg"></i>
+        <span id="toastMessage">บันทึกสำเร็จ</span>
+    </div>
+
+    <!-- MODAL: ฟอร์มส่งรีวิวลูกค้า -->
+    <div id="mascotReviewFormModal" class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-[28px] max-w-md w-full p-5 sm:p-6 shadow-2xl border-2 border-[#FFE0E9] space-y-4">
+            <div class="flex items-center justify-between border-b border-pink-100 pb-3">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-10 h-10 rounded-2xl bg-nicha-pinkLight text-nicha-pink flex items-center justify-center text-xl shadow-sm">
+                        <i class="ph-fill ph-sparkle"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base sm:text-lg font-bold text-[#5A3E42]">เขียนรีวิวให้ห้องเสื้อปอลลออาร์</h3>
+                        <p class="text-xs text-[#9E8286] font-body">ร่วมแบ่งปันความประทับใจของคุณนะคะ 🎀</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeMascotReviewFormModal()" class="w-8 h-8 rounded-full bg-pink-50 hover:bg-pink-100 text-slate-500 flex items-center justify-center">
+                    <i class="ph-bold ph-x"></i>
+                </button>
+            </div>
+
+            <form id="customerMascotReviewForm" onsubmit="submitCustomerReviewToSupabase(event)" class="space-y-3.5">
+                <div>
+                    <label class="block text-xs font-semibold text-[#5A3E42] mb-1">ชื่อของคุณ *</label>
+                    <input type="text" id="custReviewName" required placeholder="เช่น คุณพลอย, คุณมินนี่" class="w-full px-3.5 py-2.5 rounded-2xl border border-pink-200 text-sm focus:outline-none focus:border-nicha-pink bg-[#FFF9FB]">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-[#5A3E42] mb-1.5">ระดับดาวความพึงพอใจ *</label>
+                    <input type="hidden" id="custReviewRating" value="5">
+                    <div id="starRatingContainer" class="flex items-center gap-1.5 bg-[#FFFDF2] border border-amber-200/80 px-3.5 py-2 rounded-2xl">
+                        <button type="button" onclick="selectReviewStar(1)" class="star-btn text-2xl text-nicha-yellow transition-transform active:scale-90"><i class="ph-fill ph-star"></i></button>
+                        <button type="button" onclick="selectReviewStar(2)" class="star-btn text-2xl text-nicha-yellow transition-transform active:scale-90"><i class="ph-fill ph-star"></i></button>
+                        <button type="button" onclick="selectReviewStar(3)" class="star-btn text-2xl text-nicha-yellow transition-transform active:scale-90"><i class="ph-fill ph-star"></i></button>
+                        <button type="button" onclick="selectReviewStar(4)" class="star-btn text-2xl text-nicha-yellow transition-transform active:scale-90"><i class="ph-fill ph-star"></i></button>
+                        <button type="button" onclick="selectReviewStar(5)" class="star-btn text-2xl text-nicha-yellow transition-transform active:scale-90"><i class="ph-fill ph-star"></i></button>
+                        <span id="starRatingLabel" class="ml-2 text-xs font-semibold text-amber-600">5 ดาว (ประทับใจมาก)</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-[#5A3E42] mb-1">ข้อความรีวิว *</label>
+                    <textarea id="custReviewComment" required rows="3" placeholder="พิมพ์รีวิวความประทับใจของคุณที่นี่..." class="w-full px-3.5 py-2.5 rounded-2xl border border-pink-200 text-sm font-body focus:outline-none focus:border-nicha-pink bg-[#FFF9FB]"></textarea>
+                </div>
+
+                <div class="flex items-center justify-end gap-2 pt-1">
+                    <button type="button" onclick="closeMascotReviewFormModal()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium text-slate-600 hover:bg-slate-50">
+                        ยกเลิก
+                    </button>
+                    <button type="submit" id="submitReviewBtn" class="bg-nicha-pink hover:bg-nicha-pinkDark text-white px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold shadow-sm flex items-center gap-1.5 transition-all">
+                        <i class="ph-fill ph-paper-plane-tilt"></i> ส่งรีวิว
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: ป๊อปอัพขอบคุณ -->
+    <div id="thankYouReviewModal" class="fixed inset-0 z-[60] hidden bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-[32px] max-w-sm w-full p-6 text-center shadow-2xl border-2 border-[#FFD1DC] space-y-4 relative overflow-hidden">
+            <div class="w-16 h-16 mx-auto rounded-full bg-nicha-pinkLight border-2 border-nicha-yellow flex items-center justify-center text-3xl text-nicha-pink shadow-sm">
+                <i class="ph-fill ph-heart"></i>
+            </div>
+            <div class="space-y-1.5">
+                <span class="inline-block bg-nicha-blueLight text-nicha-blueDark text-[11px] font-bold px-3 py-0.5 rounded-full">
+                    THANK YOU ♡
+                </span>
+                <h3 class="text-lg font-bold text-[#5A3E42]">ขอบคุณสำหรับรีวิวนะคะ 🎀</h3>
+                <p class="text-xs sm:text-sm text-[#7A5C60] font-body leading-relaxed">
+                    บันทึกรีวิวของคุณลงในฐานข้อมูล Supabase สำเร็จแล้ว ขอบคุณที่แวะมาอุดหนุนและเป็นกำลังใจให้ทางร้านนะคะ 💖✨
+                </p>
+            </div>
+            <div class="pt-1 flex gap-2 justify-center">
+                <button type="button" onclick="closeThankYouModal(true)" class="bg-nicha-blue text-white hover:bg-nicha-blueDark text-xs font-semibold px-4 py-2.5 rounded-xl shadow-sm transition-all">
+                    ดูรีวิวทั้งหมด
+                </button>
+                <button type="button" onclick="closeThankYouModal(false)" class="bg-nicha-pink hover:bg-nicha-pinkDark text-white text-xs font-semibold px-5 py-2.5 rounded-xl shadow-sm transition-all">
+                    ตกลง ♡
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MASCOT WIDGET -->
+    <aside id="mascotWidget" aria-label="ผู้ช่วยมาสคอตประจำร้าน" class="flex items-center gap-2 select-none">
+        <div id="mascotBubble" class="mascot-speech-bubble pointer-events-auto relative rounded-2xl px-3.5 py-2.5 pr-7 max-w-[190px] sm:max-w-[230px] text-left">
+            <button type="button" onclick="userCloseMascotBubble(event)" title="ปิดกล่องข้อความ" class="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-pink-50 hover:bg-pink-100 text-slate-400 hover:text-nicha-pinkDark flex items-center justify-center text-[11px] transition-colors">
+                <i class="ph-bold ph-x"></i>
+            </button>
+            <p id="mascotText" class="mascot-text-fade text-xs sm:text-[13px] font-medium text-[#5A3E42] font-body leading-snug break-words">
+                ยินดีต้อนรับเข้าสู่ร้านของเรานะคะ ♡
+            </p>
+            <span class="w-2.5 h-2.5 bg-white border-r-[1.5px] border-t-[1.5px] border-[#FFD1DC] rotate-45 absolute -right-[6px] top-1/2 -translate-y-1/2"></span>
+        </div>
+
+        <div class="relative pointer-events-auto shrink-0 flex flex-col items-center">
+            <button id="mascotReopenBtn" type="button" onclick="userReopenMascotBubble(event)" title="เปิดข้อความมาสคอต" class="hidden mb-1 bg-white/95 hover:bg-nicha-pinkLight text-nicha-pinkDark border border-pink-200 shadow-sm rounded-full px-2 py-0.5 text-[10px] font-semibold flex items-center gap-0.5 transition-all">
+                <i class="ph-fill ph-chat-teardrop-dots"></i> ข้อความ
+            </button>
+
+            <button type="button" onclick="handleMascotClick()" title="จิ้มที่ตัวมาสคอตเพื่อเขียนรีวิว" class="mascot-float-btn w-16 h-16 sm:w-20 sm:h-20 rounded-full focus:outline-none active:scale-95 transition-transform flex items-center justify-center">
+                <img id="mascotAvatarImg"
+                     src="https://i.postimg.cc/ZqFh6wrW/IMG-0722.png"
+                     onerror="this.src='https://placehold.co/160x160/FFF0F5/FF85A2?text=Mascot'"
+                     alt="Mascot ห้องเสื้อปอลลออาร์"
+                     class="w-full h-full object-contain drop-shadow-md pointer-events-none">
+            </button>
+        </div>
+    </aside>
+
+    <!-- SUPABASE & APP JAVASCRIPT -->
+    <script>
+        // กำหนดค่า Supabase (Project URL และ Publishable Key ของคุณ)
+        const SUPABASE_URL = 'https://frmwtgerekaqbywyqtkh.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_bEqe6OUrXB8QZeYQh6UL2w_6kC6h4--';
+        const ADMIN_UID_TARGET = '9f8e4134-87d0-4c40-9612-f7572ad521b8';
+
+        // สร้าง Supabase Client
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let isAdminMode = false;
+        let currentEditSection = '';
+        let currentSessionUser = null;
+
+        let storeData = {
+            shopName: 'ห้องเสื้อปอลลออาร์',
+            isOpen: true,
+            bgmUrl: 'bgm.mp3',
+            shopDesc: 'กำลังโหลดข้อมูล...',
+            shopLogo: 'https://i.postimg.cc/QtNBzg7b/att-ul-O-x-Ag-ZGs-Xzh-I51x-Kr7me-KSg-X9sw-Zu7icp54A6Ric.jpg',
+            shopBanner: 'https://i.postimg.cc/VL0J2kJg/att-610eb-Tv-YX-8NI1Oxr8Jeksj8o-Zu-Rq65KD-FNv-KIRl20.jpg',
+            marquee: 'กำลังโหลดประกาศ...',
+            detailBox1: { title: 'รายละเอียดการซื้อสินค้า', text: 'กำลังโหลด...' },
+            detailBox2: { title: 'รายละเอียดเพิ่มเติม', text: 'กำลังโหลด...' },
+            detailBox3: { title: 'รายละเอียดการเอฟ', text: 'กำลังโหลด...' },
+            payment: { img: '', bank: '', accName: '', accNumber: '', note: '' },
+            contact: { line: '', chatUrl: '', fb: '', fbUrl: '', phone: '' },
+            openChat: { title: '', desc: '', url: '' },
+            reviews: []
+        };
+
+        const MASCOT_SEQUENCE = [
+            'ยินดีต้อนรับเข้าสู่ร้านของเรานะคะ ♡',
+            'จิ้มที่ตัวผมเพื่อรีวิวได้เลยนะคับ 🎀'
+        ];
+        const MASCOT_STEP_DELAY = 3500;
+
+        const mascotController = {
+            currentPage: 'home',
+            seqIndex: 0,
+            seqTimer: null,
+            fadeTimer: null,
+            eventTimer: null,
+            isBubbleClosedByUser: false,
+            activePopupContext: null,
+            isEventOverrideActive: false
+        };
+
+        function clearMascotTimers() {
+            if (mascotController.seqTimer) { clearTimeout(mascotController.seqTimer); mascotController.seqTimer = null; }
+            if (mascotController.fadeTimer) { clearTimeout(mascotController.fadeTimer); mascotController.fadeTimer = null; }
+        }
+
+        function updateMascotBubbleText(newText, immediate = false) {
+            const textEl = document.getElementById('mascotText');
+            const bubbleEl = document.getElementById('mascotBubble');
+            if (!textEl || !bubbleEl) return;
+            if (!mascotController.isBubbleClosedByUser) bubbleEl.classList.remove('bubble-hidden');
+            if (mascotController.fadeTimer) { clearTimeout(mascotController.fadeTimer); mascotController.fadeTimer = null; }
+            if (immediate || textEl.textContent.trim() === newText.trim()) {
+                textEl.classList.remove('text-fading-out');
+                textEl.textContent = newText;
+                return;
+            }
+            textEl.classList.add('text-fading-out');
+            mascotController.fadeTimer = setTimeout(() => {
+                textEl.textContent = newText;
+                textEl.classList.remove('text-fading-out');
+                mascotController.fadeTimer = null;
+            }, 260);
+        }
+
+        function startMascotSequenceForPage(pageName, resetFromFirst = true) {
+            clearMascotTimers();
+            mascotController.currentPage = pageName || mascotController.currentPage;
+            if (resetFromFirst) mascotController.seqIndex = 0;
+            if (mascotController.isBubbleClosedByUser || mascotController.isEventOverrideActive || mascotController.activePopupContext) return;
+            updateMascotBubbleText(MASCOT_SEQUENCE[mascotController.seqIndex], resetFromFirst);
+            scheduleNextMascotStep();
+        }
+
+        function scheduleNextMascotStep() {
+            if (mascotController.seqTimer) { clearTimeout(mascotController.seqTimer); mascotController.seqTimer = null; }
+            if (mascotController.isBubbleClosedByUser || mascotController.isEventOverrideActive || mascotController.activePopupContext) return;
+            if (mascotController.seqIndex < MASCOT_SEQUENCE.length - 1) {
+                mascotController.seqTimer = setTimeout(() => {
+                    mascotController.seqTimer = null;
+                    if (mascotController.isBubbleClosedByUser || mascotController.isEventOverrideActive || mascotController.activePopupContext) return;
+                    mascotController.seqIndex += 1;
+                    updateMascotBubbleText(MASCOT_SEQUENCE[mascotController.seqIndex], false);
+                    scheduleNextMascotStep();
+                }, MASCOT_STEP_DELAY);
+            }
+        }
+
+        function setMascotPopupContext(popupKey, guideMessage) {
+            clearMascotTimers();
+            mascotController.activePopupContext = { key: popupKey, text: guideMessage };
+            if (!mascotController.isBubbleClosedByUser && !mascotController.isEventOverrideActive) {
+                updateMascotBubbleText(guideMessage, false);
+            }
+        }
+
+        function clearMascotPopupContext(popupKey) {
+            if (mascotController.activePopupContext && (!popupKey || mascotController.activePopupContext.key === popupKey)) {
+                mascotController.activePopupContext = null;
+            }
+            if (!mascotController.isBubbleClosedByUser && !mascotController.isEventOverrideActive && !mascotController.activePopupContext) {
+                updateMascotBubbleText(MASCOT_SEQUENCE[mascotController.seqIndex], false);
+                scheduleNextMascotStep();
+            }
+        }
+
+        function showMascotEventMessage(eventMsg) {
+            clearMascotTimers();
+            if (mascotController.eventTimer) { clearTimeout(mascotController.eventTimer); mascotController.eventTimer = null; }
+            mascotController.isEventOverrideActive = true;
+            if (!mascotController.isBubbleClosedByUser) updateMascotBubbleText(eventMsg, false);
+            mascotController.eventTimer = setTimeout(() => {
+                mascotController.eventTimer = null;
+                mascotController.isEventOverrideActive = false;
+                if (mascotController.isBubbleClosedByUser) return;
+                if (mascotController.activePopupContext) {
+                    updateMascotBubbleText(mascotController.activePopupContext.text, false);
+                } else {
+                    updateMascotBubbleText(MASCOT_SEQUENCE[mascotController.seqIndex], false);
+                    scheduleNextMascotStep();
+                }
+            }, 3200);
+        }
+
+        function userCloseMascotBubble(e) {
+            if (e) e.stopPropagation();
+            mascotController.isBubbleClosedByUser = true;
+            clearMascotTimers();
+            document.getElementById('mascotBubble').classList.add('bubble-hidden');
+            document.getElementById('mascotReopenBtn').classList.remove('hidden');
+        }
+
+        function userReopenMascotBubble(e) {
+            if (e) e.stopPropagation();
+            mascotController.isBubbleClosedByUser = false;
+            document.getElementById('mascotBubble').classList.remove('bubble-hidden');
+            document.getElementById('mascotReopenBtn').classList.add('hidden');
+            if (mascotController.activePopupContext) updateMascotBubbleText(mascotController.activePopupContext.text, true);
+            else startMascotSequenceForPage(mascotController.currentPage, true);
+        }
+
+        function handleMascotClick() {
+            if (mascotController.isBubbleClosedByUser) userReopenMascotBubble();
+            openMascotReviewFormModal();
+        }
+
+        function openMascotReviewFormModal() {
+            document.getElementById('customerMascotReviewForm').reset();
+            selectReviewStar(5);
+            document.getElementById('mascotReviewFormModal').classList.remove('hidden');
+            setMascotPopupContext('mascotReviewForm', 'กรอกชื่อ เลือกดาว และเขียนรีวิวให้ร้านเราได้เลยนะคับ 🎀');
+        }
+
+        function closeMascotReviewFormModal() {
+            document.getElementById('mascotReviewFormModal').classList.add('hidden');
+            clearMascotPopupContext('mascotReviewForm');
+        }
+
+        function selectReviewStar(rating) {
+            document.getElementById('custReviewRating').value = rating;
+            const starBtns = document.querySelectorAll('#starRatingContainer .star-btn');
+            const labels = { 1: '1 ดาว', 2: '2 ดาว', 3: '3 ดาว', 4: '4 ดาว', 5: '5 ดาว (ประทับใจมาก)' };
+            starBtns.forEach((btn, idx) => {
+                btn.className = idx < rating ? 'star-btn text-2xl text-nicha-yellow transition-transform active:scale-90' : 'star-btn text-2xl text-slate-300 transition-transform active:scale-90';
+            });
+            document.getElementById('starRatingLabel').textContent = labels[rating] || `${rating} ดาว`;
+        }
+
+        async function submitCustomerReviewToSupabase(e) {
+            e.preventDefault();
+            const name = document.getElementById('custReviewName').value.trim();
+            const rating = parseInt(document.getElementById('custReviewRating').value, 10) || 5;
+            const comment = document.getElementById('custReviewComment').value.trim();
+            if (!name || !comment) return;
+
+            const submitBtn = document.getElementById('submitReviewBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'กำลังบันทึก...';
+
+            try {
+                const { error } = await supabaseClient
+                    .from('shop_reviews')
+                    .insert([{ name, rating, comment, date_label: 'เมื่อสักครู่' }]);
+
+                if (error) throw error;
+
+                await fetchShopDataFromSupabase();
+                document.getElementById('mascotReviewFormModal').classList.add('hidden');
+                document.getElementById('thankYouReviewModal').classList.remove('hidden');
+                setMascotPopupContext('thankYouReview', 'เย้! บันทึกรีวิวลง Supabase สำเร็จแล้วนะคับ 💖✨');
+            } catch (err) {
+                console.error(err);
+                showToast('เกิดข้อผิดพลาดในการบันทึกรีวิว: ' + err.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="ph-fill ph-paper-plane-tilt"></i> ส่งรีวิว';
+            }
+        }
+
+        function closeThankYouModal(openAllReviews = false) {
+            document.getElementById('thankYouReviewModal').classList.add('hidden');
+            clearMascotPopupContext('thankYouReview');
+            clearMascotPopupContext('mascotReviewForm');
+            if (openAllReviews) openReviewSheet();
+        }
+
+        function showToast(msg) {
+            const box = document.getElementById('toastBox');
+            document.getElementById('toastMessage').textContent = msg;
+            box.classList.remove('hidden');
+            showMascotEventMessage(`✨ ${msg}`);
+            setTimeout(() => box.classList.add('hidden'), 3000);
+        }
+
+        // ดึงข้อมูลจริงจาก Supabase
+        async function fetchShopDataFromSupabase() {
+            try {
+                // 1. ดึงตั้งค่าร้าน (shop_settings id = 1)
+                const { data: settingData, error: settingErr } = await supabaseClient
+                    .from('shop_settings')
+                    .select('*')
+                    .eq('id', 1)
+                    .single();
+
+                if (settingErr) throw settingErr;
+
+                if (settingData) {
+                    storeData.shopName = settingData.shop_name;
+                    storeData.isOpen = settingData.is_open;
+                    storeData.bgmUrl = settingData.bgm_url || 'bgm.mp3';
+                    storeData.shopDesc = settingData.shop_desc;
+                    storeData.shopLogo = settingData.shop_logo;
+                    storeData.shopBanner = settingData.shop_banner;
+                    storeData.marquee = settingData.marquee;
+                    storeData.detailBox1 = { title: settingData.detailBox1_title || settingData.detail_box1_title, text: settingData.detailBox1_text || settingData.detail_box1_text };
+                    storeData.detailBox2 = { title: settingData.detailBox2_title || settingData.detail_box2_title, text: settingData.detailBox2_text || settingData.detail_box2_text };
+                    storeData.detailBox3 = { title: settingData.detailBox3_title || settingData.detail_box3_title, text: settingData.detailBox3_text || settingData.detail_box3_text };
+                    storeData.payment = {
+                        img: settingData.payment_img,
+                        bank: settingData.payment_bank,
+                        accName: settingData.payment_acc_name,
+                        accNumber: settingData.payment_acc_number,
+                        note: settingData.payment_note
+                    };
+                    storeData.contact = {
+                        line: settingData.contact_line,
+                        chatUrl: settingData.contact_chat_url,
+                        fb: settingData.contact_fb,
+                        fbUrl: settingData.contact_fb_url,
+                        phone: settingData.contact_phone
+                    };
+                    storeData.openChat = {
+                        title: settingData.openchat_title,
+                        desc: settingData.openchat_desc,
+                        url: settingData.openchat_url
+                    };
+                }
+
+                // 2. ดึงรีวิวจากตาราง shop_reviews
+                const { data: reviewData, error: reviewErr } = await supabaseClient
+                    .from('shop_reviews')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (!reviewErr && reviewData) {
+                    storeData.reviews = reviewData.map(r => ({
+                        id: r.id,
+                        name: r.name,
+                        rating: r.rating,
+                        comment: `${r.comment} (${r.name} ${'⭐'.repeat(r.rating)})`,
+                        date: r.date_label || 'ล่าสุด'
+                    }));
+                }
+
+                renderUIFromStoreData();
+            } catch (err) {
+                console.error('Error fetching Supabase data:', err);
+                throw err;
+            }
+        }
+
+        function renderUIFromStoreData() {
+            document.getElementById('shopNameDisplay').textContent = storeData.shopName;
+            document.getElementById('shopBanner').src = storeData.shopBanner;
+            document.getElementById('shopLogo').src = storeData.shopLogo;
+            document.getElementById('shopDescDisplay').textContent = storeData.shopDesc;
+            document.getElementById('marqueeDisplay').textContent = storeData.marquee;
+
+            document.getElementById('detailBox1TitleDisplay').innerHTML = `<i class="ph-fill ph-sparkle text-nicha-pink"></i> ${storeData.detailBox1.title}`;
+            document.getElementById('detailBox1TextDisplay').textContent = storeData.detailBox1.text;
+
+            document.getElementById('detailBox2TitleDisplay').innerHTML = `<i class="ph-fill ph-info text-nicha-blueDark"></i> ${storeData.detailBox2.title}`;
+            document.getElementById('detailBox2TextDisplay').textContent = storeData.detailBox2.text;
+
+            document.getElementById('detailBox3TitleDisplay').innerHTML = `<i class="ph-fill ph-notebook text-nicha-yellowDark"></i> ${storeData.detailBox3.title}`;
+            document.getElementById('detailBox3TextDisplay').textContent = storeData.detailBox3.text;
+
+            document.getElementById('paymentImgDisplay').src = storeData.payment.img;
+            document.getElementById('bankNameDisplay').textContent = storeData.payment.bank;
+            document.getElementById('accNameDisplay').textContent = storeData.payment.accName;
+            document.getElementById('accNumberDisplay').textContent = storeData.payment.accNumber;
+            document.getElementById('paymentNoteDisplay').textContent = storeData.payment.note;
+
+            document.getElementById('openChatTitleDisplay').textContent = storeData.openChat.title;
+            document.getElementById('trackingNoteDisplay').textContent = storeData.openChat.desc;
+            document.getElementById('openChatLinkBtn').href = storeData.openChat.url;
+            document.getElementById('openChatUrlText').textContent = storeData.openChat.url;
+
+            document.getElementById('contactLineDisplay').textContent = storeData.contact.line;
+            document.getElementById('contactFbDisplay').textContent = storeData.contact.fb;
+            document.getElementById('contactChatCardBtn').href = storeData.contact.chatUrl;
+            document.getElementById('paymentChatBtn').href = storeData.contact.chatUrl;
+            const fbBtn = document.getElementById('contactFbCardBtn');
+            if (fbBtn) fbBtn.href = storeData.contact.fbUrl;
+
+            const audioEl = document.getElementById('bgmAudioPlayer');
+            if (audioEl && storeData.bgmUrl && audioEl.src !== storeData.bgmUrl) {
+                audioEl.src = storeData.bgmUrl;
+            }
+
+            renderShopStatus();
+            renderReviews();
+        }
+
+        function renderShopStatus() {
+            const badge = document.getElementById('shopStatusBadge');
+            const dot = document.getElementById('shopStatusDot');
+            if (!badge || !dot) return;
+            if (storeData.isOpen) {
+                badge.className = 'bg-[#F8DFE2] text-[#6E474C] text-[11px] font-semibold px-2.5 py-0.5 rounded-full border border-[#F8DFE2] flex items-center gap-1';
+                badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> เปิดร้าน';
+                dot.className = 'w-3.5 h-3.5 rounded-full bg-[#22C55E] border-2 border-white absolute -bottom-0.5 -right-0.5 shadow-sm';
+            } else {
+                badge.className = 'bg-rose-100 text-rose-700 text-[11px] font-semibold px-2.5 py-0.5 rounded-full border border-rose-100 flex items-center gap-1';
+                badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> ปิดร้าน';
+                dot.className = 'w-3.5 h-3.5 rounded-full bg-rose-500 border-2 border-white absolute -bottom-0.5 -right-0.5 shadow-sm';
+            }
+        }
+
+        function renderReviews() {
+            const list = document.getElementById('reviewList');
+            const badge = document.getElementById('reviewCountBadge');
+            const subBadge = document.getElementById('reviewSheetSubBadge');
+            list.innerHTML = '';
+            badge.textContent = `${storeData.reviews.length}`;
+            if (subBadge) subBadge.textContent = `ทั้งหมด ${storeData.reviews.length} รีวิวจากฐานข้อมูลจริง`;
+
+            const pastelBorders = ['border-pink-200/80 bg-pink-50/40', 'border-amber-200/80 bg-amber-50/40', 'border-sky-200/80 bg-sky-50/40'];
+            storeData.reviews.forEach((rev, idx) => {
+                const styleClass = pastelBorders[idx % pastelBorders.length];
+                const card = document.createElement('div');
+                card.className = `p-3.5 rounded-2xl border ${styleClass} shadow-sm flex items-center justify-between gap-3`;
+                card.innerHTML = `
+                    <p class="text-sm text-slate-700 font-body leading-relaxed">“${rev.comment}”</p>
+                    ${isAdminMode ? `
+                        <button onclick="deleteReviewFromSupabase(${rev.id})" class="shrink-0 text-xs text-red-500 hover:underline flex items-center gap-1">
+                            <i class="ph-bold ph-trash"></i> ลบ
+                        </button>
+                    ` : ''}
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        async function deleteReviewFromSupabase(reviewId) {
+            try {
+                const { error } = await supabaseClient.from('shop_reviews').delete().eq('id', reviewId);
+                if (error) throw error;
+                await fetchShopDataFromSupabase();
+                showToast('ลบรีวิวสำเร็จแล้ว');
+            } catch (err) {
+                showToast('ลบไม่สำเร็จ: ' + err.message);
+            }
+        }
+
+        // ระบบล็อกอินแอดมิน (Supabase Auth & UID Check)
+        async function handleLogoClickToAdmin() {
+            // เช็คว่าล็อกอินอยู่แล้วและเป็นแอดมินหรือไม่
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session && session.user && session.user.id === ADMIN_UID_TARGET) {
+                toggleAdminMode(true);
+            } else {
+                document.getElementById('adminLoginModal').classList.remove('hidden');
+                setMascotPopupContext('adminLogin', 'กรอกรหัสผ่านแอดมินเพื่อจัดการร้านค้านะคับ 🔐');
+            }
+        }
+
+        function closeAdminLoginModal() {
+            document.getElementById('adminLoginModal').classList.add('hidden');
+            clearMascotPopupContext('adminLogin');
+        }
+
+        async function handleAdminLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('adminEmailInput').value.trim();
+            const password = document.getElementById('adminPasswordInput').value;
+            const btn = document.getElementById('adminLoginBtn');
+            btn.disabled = true;
+            btn.textContent = 'กำลังตรวจสอบ...';
+
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+
+                if (data.user && data.user.id === ADMIN_UID_TARGET) {
+                    currentSessionUser = data.user;
+                    closeAdminLoginModal();
+                    toggleAdminMode(true);
+                    showToast('เข้าสู่ระบบแอดมิน Supabase สำเร็จ!');
+                } else {
+                    await supabaseClient.auth.signOut();
+                    showToast('บัญชีนี้ไม่ใช่แอดมินหลักของร้าน (UID ไม่ตรงกัน)');
+                }
+            } catch (err) {
+                showToast('เข้าสู่ระบบไม่สำเร็จ: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'เข้าสู่ระบบ';
+            }
+        }
+
+        async function handleAdminLogout() {
+            await supabaseClient.auth.signOut();
+            currentSessionUser = null;
+            toggleAdminMode(false);
+            showToast('ออกจากระบบแอดมินแล้ว');
+        }
+
+        function toggleAdminMode(enable) {
+            isAdminMode = enable;
+            const elements = document.querySelectorAll('.admin-only');
+            elements.forEach(el => {
+                if (isAdminMode) el.classList.remove('hidden');
+                else el.classList.add('hidden');
+            });
+            renderReviews();
+        }
+
+        function selectTab(tabName) {
+            const homeContent = document.getElementById('content-home');
+            const tabContainer = document.getElementById('tabContentContainer');
+            const subTabs = ['payment', 'tracking', 'contact'];
+
+            if (tabName === 'home') {
+                homeContent.classList.remove('hidden');
+                tabContainer.classList.add('hidden');
+                subTabs.forEach(t => {
+                    document.getElementById(`tab-${t}`).classList.remove('active');
+                    document.getElementById(`content-${t}`).classList.add('hidden');
+                });
+            } else {
+                homeContent.classList.add('hidden');
+                tabContainer.classList.remove('hidden');
+                subTabs.forEach(t => {
+                    const btn = document.getElementById(`tab-${t}`);
+                    const content = document.getElementById(`content-${t}`);
+                    if (t === tabName) {
+                        btn.classList.add('active');
+                        content.classList.remove('hidden');
+                    } else {
+                        btn.classList.remove('active');
+                        content.classList.add('hidden');
+                    }
+                });
+            }
+            startMascotSequenceForPage(tabName, true);
+        }
+
+        function openReviewSheet() {
+            document.getElementById('reviewFloatingModal').classList.remove('hidden');
+            setMascotPopupContext('review', 'กำลังดูรีวิวทั้งหมดจากฐานข้อมูล Supabase 🌟');
+        }
+
+        function closeReviewSheet() {
+            document.getElementById('reviewFloatingModal').classList.add('hidden');
+            clearMascotPopupContext('review');
+        }
+
+        // เปิด Modal แก้ไขข้อมูลร้าน (แอดมิน)
+        function openAdminModal(section) {
+            currentEditSection = section;
+            const modal = document.getElementById('adminGeneralModal');
+            const title = document.getElementById('generalModalTitle');
+            const fields = document.getElementById('generalModalFields');
+
+            if (section === 'shopInfo') {
+                title.textContent = 'แก้ไขส่วนหัวร้าน & สถานะ Supabase';
+                fields.innerHTML = `
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">ชื่อร้าน</label><input type="text" id="genShopName" value="${storeData.shopName}" required class="w-full px-3.5 py-2 rounded-xl border text-sm"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">สถานะ</label><select id="genShopStatus" class="w-full px-3.5 py-2 rounded-xl border text-sm bg-white"><option value="open" ${storeData.isOpen ? 'selected' : ''}>🟢 เปิดร้าน</option><option value="closed" ${!storeData.isOpen ? 'selected' : ''}>🔴 ปิดร้าน</option></select></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">ลิงก์แบนเนอร์</label><input type="url" id="genShopBanner" value="${storeData.shopBanner}" required class="w-full px-3.5 py-2 rounded-xl border text-sm"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">ลิงก์โลโก้</label><input type="url" id="genShopLogo" value="${storeData.shopLogo}" required class="w-full px-3.5 py-2 rounded-xl border text-sm"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">ไฟล์เพลง (.mp3)</label><input type="text" id="genBgmUrl" value="${storeData.bgmUrl}" required class="w-full px-3.5 py-2 rounded-xl border text-sm font-mono"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">รายละเอียดร้าน</label><textarea id="genShopDesc" rows="3" required class="w-full px-3.5 py-2 rounded-xl border text-sm">${storeData.shopDesc}</textarea></div>
+                `;
+            } else if (section === 'detailBox1') {
+                title.textContent = 'แก้ไขกรอบที่ 1';
+                fields.innerHTML = `
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">หัวข้อ</label><input type="text" id="genDetail1Title" value="${storeData.detailBox1.title}" required class="w-full px-3.5 py-2 rounded-xl border text-sm"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">เนื้อหา</label><textarea id="genDetail1Text" rows="4" required class="w-full px-3.5 py-2 rounded-xl border text-sm">${storeData.detailBox1.text}</textarea></div>
+                `;
+            } else if (section === 'detailBox2') {
+                title.textContent = 'แก้ไขกรอบที่ 2';
+                fields.innerHTML = `
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">หัวข้อ</label><input type="text" id="genDetail2Title" value="${storeData.detailBox2.title}" required class="w-full px-3.5 py-2 rounded-xl border text-sm"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">เนื้อหา</label><textarea id="genDetail2Text" rows="4" required class="w-full px-3.5 py-2 rounded-xl border text-sm">${storeData.detailBox2.text}</textarea></div>
+                `;
+            } else if (section === 'detailBox3') {
+                title.textContent = 'แก้ไขกรอบที่ 3';
+                fields.innerHTML = `
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">หัวข้อ</label><input type="text" id="genDetail3Title" value="${storeData.detailBox3.title}" required class="w-full px-3.5 py-2 rounded-xl border text-sm"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">เนื้อหา</label><textarea id="genDetail3Text" rows="4" required class="w-full px-3.5 py-2 rounded-xl border text-sm">${storeData.detailBox3.text}</textarea></div>
+                `;
+            } else if (section === 'marquee') {
+                title.textContent = 'แก้ไขประกาศข้อความวิ่ง';
+                fields.innerHTML = `
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">ประกาศ</label><textarea id="genMarquee" rows="3" required class="w-full px-3.5 py-2 rounded-xl border text-sm">${storeData.marquee}</textarea></div>
+                `;
+            } else if (section === 'payment') {
+                title.textContent = 'แก้ไขช่องทางโอนเงิน';
+                fields.innerHTML = `
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">รูป QR/โอน</label><input type="url" id="genPaymentImg" value="${storeData.payment.img}" required class="w-full px-3.5 py-2 rounded-xl border text-sm"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">หัวข้อธนาคาร</label><input type="text" id="genBank" value="${storeData.payment.bank}" required class="w-full px-3.5 py-2 rounded-xl border text-sm"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">ชื่อบัญชี</label><input type="text" id="genAccName" value="${storeData.payment.accName}" required class="w-full px-3.5 py-2 rounded-xl border text-sm"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">เลขบัญชี</label><input type="text" id="genAccNum" value="${storeData.payment.accNumber}" required class="w-full px-3.5 py-2 rounded-xl border text-sm font-mono"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">หมายเหตุ</label><textarea id="genPaymentNote" rows="3" required class="w-full px-3.5 py-2 rounded-xl border text-sm">${storeData.payment.note}</textarea></div>
+                `;
+            } else if (section === 'tracking') {
+                title.textContent = 'แก้ไขลิงก์กลุ่ม OpenChat';
+                fields.innerHTML = `
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">หัวข้อกลุ่ม</label><input type="text" id="genOpenChatTitle" value="${storeData.openChat.title}" required class="w-full px-3.5 py-2 rounded-xl border text-sm"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">ลิงก์กลุ่ม OpenChat</label><input type="url" id="genOpenChatUrl" value="${storeData.openChat.url}" required class="w-full px-3.5 py-2 rounded-xl border text-sm font-mono"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">คำอธิบาย</label><textarea id="genOpenChatDesc" rows="3" required class="w-full px-3.5 py-2 rounded-xl border text-sm">${storeData.openChat.desc}</textarea></div>
+                `;
+            } else if (section === 'contact') {
+                title.textContent = 'แก้ไขช่องทางติดต่อ';
+                fields.innerHTML = `
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">Line ข้อความ</label><input type="text" id="genLine" value="${storeData.contact.line}" required class="w-full px-3.5 py-2 rounded-xl border text-sm"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">ลิงก์ Line Chat</label><input type="url" id="genChatUrl" value="${storeData.contact.chatUrl}" required class="w-full px-3.5 py-2 rounded-xl border text-sm font-mono"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">ชื่อ Facebook</label><input type="text" id="genFb" value="${storeData.contact.fb}" required class="w-full px-3.5 py-2 rounded-xl border text-sm"></div>
+                    <div><label class="block text-xs font-semibold text-slate-600 mb-1">ลิงก์ Facebook</label><input type="url" id="genFbUrl" value="${storeData.contact.fbUrl}" required class="w-full px-3.5 py-2 rounded-xl border text-sm font-mono"></div>
+                `;
+            }
+
+            modal.classList.remove('hidden');
+            setMascotPopupContext('adminGeneral', 'แก้ไขข้อมูลแล้วกดบันทึกเพื่ออัปเดตลง Supabase ได้เลยนะคับ 🛠️');
+        }
+
+        function closeAdminGeneralModal() {
+            document.getElementById('adminGeneralModal').classList.add('hidden');
+            clearMascotPopupContext('adminGeneral');
+        }
+
+        // บันทึกข้อมูลแก้ไขลง Supabase จริง
+        async function saveGeneralAdminToSupabase(e) {
+            e.preventDefault();
+            const saveBtn = document.getElementById('saveAdminBtn');
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'กำลังบันทึก...';
+
+            let updatePayload = {};
+            if (currentEditSection === 'shopInfo') {
+                updatePayload = {
+                    shop_name: document.getElementById('genShopName').value.trim(),
+                    is_open: document.getElementById('genShopStatus').value === 'open',
+                    shop_banner: document.getElementById('genShopBanner').value.trim(),
+                    shop_logo: document.getElementById('genShopLogo').value.trim(),
+                    bgm_url: document.getElementById('genBgmUrl').value.trim(),
+                    shop_desc: document.getElementById('genShopDesc').value.trim()
+                };
+            } else if (currentEditSection === 'detailBox1') {
+                updatePayload = {
+                    detail_box1_title: document.getElementById('genDetail1Title').value.trim(),
+                    detail_box1_text: document.getElementById('genDetail1Text').value.trim()
+                };
+            } else if (currentEditSection === 'detailBox2') {
+                updatePayload = {
+                    detail_box2_title: document.getElementById('genDetail2Title').value.trim(),
+                    detail_box2_text: document.getElementById('genDetail2Text').value.trim()
+                };
+            } else if (currentEditSection === 'detailBox3') {
+                updatePayload = {
+                    detail_box3_title: document.getElementById('genDetail3Title').value.trim(),
+                    detail_box3_text: document.getElementById('genDetail3Text').value.trim()
+                };
+            } else if (currentEditSection === 'marquee') {
+                updatePayload = { marquee: document.getElementById('genMarquee').value.trim() };
+            } else if (currentEditSection === 'payment') {
+                updatePayload = {
+                    payment_img: document.getElementById('genPaymentImg').value.trim(),
+                    payment_bank: document.getElementById('genBank').value.trim(),
+                    payment_acc_name: document.getElementById('genAccName').value.trim(),
+                    payment_acc_number: document.getElementById('genAccNum').value.trim(),
+                    payment_note: document.getElementById('genPaymentNote').value.trim()
+                };
+            } else if (currentEditSection === 'tracking') {
+                updatePayload = {
+                    openchat_title: document.getElementById('genOpenChatTitle').value.trim(),
+                    openchat_url: document.getElementById('genOpenChatUrl').value.trim(),
+                    openchat_desc: document.getElementById('genOpenChatDesc').value.trim()
+                };
+            } else if (currentEditSection === 'contact') {
+                updatePayload = {
+                    contact_line: document.getElementById('genLine').value.trim(),
+                    contact_chat_url: document.getElementById('genChatUrl').value.trim(),
+                    contact_fb: document.getElementById('genFb').value.trim(),
+                    contact_fb_url: document.getElementById('genFbUrl').value.trim()
+                };
+            }
+
+            try {
+                const { error } = await supabaseClient
+                    .from('shop_settings')
+                    .update(updatePayload)
+                    .eq('id', 1);
+
+                if (error) throw error;
+
+                await fetchShopDataFromSupabase();
+                closeAdminGeneralModal();
+                showToast('บันทึกข้อมูลลง Supabase สำเร็จแล้ว!');
+            } catch (err) {
+                showToast('บันทึกไม่สำเร็จ: ' + err.message);
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'บันทึกไปยัง Supabase';
+            }
+        }
+
+        function copyBankNumber() {
+            const tempInput = document.createElement('input');
+            tempInput.value = storeData.payment.accNumber;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast('คัดลอกเลขบัญชี ' + storeData.payment.accNumber + ' แล้ว');
+        }
+
+        let isBgmPlaying = false;
+        function updateBgmButtonUI(playing) {
+            isBgmPlaying = playing;
+            const btn = document.getElementById('bgmToggleBtn');
+            const icon = document.getElementById('bgmIcon');
+            if (!btn || !icon) return;
+            if (playing) {
+                btn.className = 'w-7 h-7 rounded-full bg-nicha-pink text-white border border-nicha-pink flex items-center justify-center text-sm shadow-sm transition-all animate-pulse';
+                icon.className = 'ph-fill ph-speaker-high';
+            } else {
+                btn.className = 'w-7 h-7 rounded-full bg-nicha-pinkLight hover:bg-nicha-pink text-nicha-pinkDark hover:text-white border border-pink-200 flex items-center justify-center text-sm shadow-sm transition-all active:scale-90';
+                icon.className = 'ph-fill ph-music-notes';
+            }
+        }
+
+        function toggleBgmPlayback() {
+            const audioEl = document.getElementById('bgmAudioPlayer');
+            if (!audioEl) return;
+            if (audioEl.paused) {
+                audioEl.volume = 0.5;
+                audioEl.play().then(() => updateBgmButtonUI(true)).catch(() => {
+                    updateBgmButtonUI(false);
+                    showToast('กรุณาวางไฟล์เพลง (เช่น bgm.mp3) ใน GitHub หรือตั้งค่าลิงก์เพลงก่อนนะคะ 🎵');
+                });
+            } else {
+                audioEl.pause();
+                updateBgmButtonUI(false);
+            }
+        }
+
+        function setupAutoBgmOnFirstTap() {
+            const tryPlayOnce = (e) => {
+                if (e.target && e.target.closest('#bgmToggleBtn')) return;
+                const audioEl = document.getElementById('bgmAudioPlayer');
+                if (audioEl && audioEl.paused) {
+                    audioEl.volume = 0.5;
+                    audioEl.play().then(() => updateBgmButtonUI(true)).catch(() => {});
+                }
+                document.removeEventListener('click', tryPlayOnce);
+                document.removeEventListener('touchstart', tryPlayOnce);
+            };
+            document.addEventListener('click', tryPlayOnce, { once: true });
+            document.addEventListener('touchstart', tryPlayOnce, { once: true });
+        }
+
+        let hasSplashFinished = false;
+        let hasSplashStarted = false;
+
+        function dismissSplashScreen() {
+            if (hasSplashFinished) return;
+            hasSplashFinished = true;
+            const splash = document.getElementById('appSplashScreen');
+            if (!splash) return;
+            splash.classList.add('splash-fade-out');
+            startMascotSequenceForPage(mascotController.currentPage || 'home', true);
+            setTimeout(() => { if (splash) splash.style.display = 'none'; }, 600);
+        }
+
+        async function runInitialSplashFlow() {
+            if (hasSplashStarted) return;
+            hasSplashStarted = true;
+
+            const splash = document.getElementById('appSplashScreen');
+            if (splash) {
+                splash.style.display = 'flex';
+                splash.classList.remove('splash-fade-out');
+            }
+
+            try {
+                document.getElementById('splashStatusText').textContent = 'กำลังดึงข้อมูลจาก Supabase...';
+                await fetchShopDataFromSupabase();
+                setupAutoBgmOnFirstTap();
+                selectTab('home');
+
+                setTimeout(() => {
+                    dismissSplashScreen();
+                }, 1200);
+            } catch (err) {
+                console.error(err);
+                const errBox = document.getElementById('splashErrorBox');
+                const errMsg = document.getElementById('splashErrorMsg');
+                if (errBox && errMsg) {
+                    errMsg.textContent = 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้: ' + err.message;
+                    errBox.classList.remove('hidden');
+                }
+            }
+        }
+
+        function retrySplashInit() {
+            hasSplashFinished = false;
+            hasSplashStarted = false;
+            const errBox = document.getElementById('splashErrorBox');
+            if (errBox) errBox.classList.add('hidden');
+            runInitialSplashFlow();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', runInitialSplashFlow);
+        } else {
+            runInitialSplashFlow();
+        }
+        window.addEventListener('load', runInitialSplashFlow);
+    </script>
+</body>
+</html>
